@@ -2,5 +2,14 @@ format_version: v1.0
 type: UniqueComponent
 attributes: {id: tcpipIperf}
 children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: TCPIP_IPERF_TX_BW_LIMIT}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: '10'}
 - type: ElementPosition
-  attributes: {x: '30', y: '80', id: tcpipIperf}
+  attributes: {x: '28', y: '80', id: tcpipIperf}

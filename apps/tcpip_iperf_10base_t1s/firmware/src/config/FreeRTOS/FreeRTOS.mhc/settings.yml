@@ -5,10 +5,10 @@ frameworkPath: ..\..\..\..\..\..\..\Harmony3
 processor: ATSAME54P20A
 projectName: tcpip_iperf_10base_t1s_freertos
 settings:
-  PackageFilter: bsp;core;core_apps_sam_d5x_e5x;crypto;csp;dev_packs;gfx;gfx_apps_sam_d5x_e5x;net;net_10base_t1s;net_apps_sam_e5x;quick_docs;touch;usb
+  PackageFilter: bsp;core;crypto;csp;dev_packs;harmony-services;net;net_10base_t1s;net_10base_t1s_mr;quick_docs;usb
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'
   CMSISPath: .\dev_packs\arm\CMSIS\5.8.0
-  MERGE_STRATEGY: USER_ALL
+  MERGE_STRATEGY: OVERWRITE
   DFPPath: .\dev_packs\Microchip\SAME54_DFP\3.6.95\atdf\ATSAME54P20A.atdf
