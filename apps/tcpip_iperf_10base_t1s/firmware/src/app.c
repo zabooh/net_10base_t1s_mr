@@ -59,6 +59,8 @@ static SYS_MODULE_INDEX          miimObjIx = 0;       // MIIM object index
 static LAN867X_REG_OBJ           clientObj = {0};
 static DRV_MIIM_OPERATION_HANDLE opHandle;
 
+extern struct font sysfont;
+
 /******************************************************************************
 *  Private function declaration
 ******************************************************************************/
@@ -84,7 +86,7 @@ static DRV_MIIM_RESULT Read_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAdd
 void APP_Initialize(void)
 {
 	/* Place the App state machine in its initial state. */
-	appData.state = APP_WAIT_STACK_INIT;
+	appData.state = APP_DISPLAY_INIT;    
 }
 
 /******************************************************************************
@@ -100,6 +102,16 @@ void APP_Tasks(void)
 	/* Check the application's current state. */
 	switch (appData.state)
     {
+        
+        case APP_DISPLAY_INIT:
+        {
+            gfx_mono_ssd1306_init();
+            gfx_mono_draw_string("Rock and Roll\n"
+                                 "   ==> <==    ", 0, 0, &sysfont);
+            appData.state = APP_WAIT_STACK_INIT;
+            break;
+        }
+        
         /* Wait till TCP stack is initialized. */
         case APP_WAIT_STACK_INIT:
         {

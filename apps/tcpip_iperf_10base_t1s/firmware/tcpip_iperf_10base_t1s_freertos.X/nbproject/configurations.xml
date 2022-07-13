@@ -201,6 +201,10 @@
               <itemPath>../src/config/FreeRTOS/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="sercom" projectFiles="true">
+              <logicalFolder name="f2" displayName="spi_master" projectFiles="true">
+                <itemPath>../src/config/FreeRTOS/peripheral/sercom/spi_master/plib_sercom0_spi_master.h</itemPath>
+                <itemPath>../src/config/FreeRTOS/peripheral/sercom/spi_master/plib_sercom_spi_master_common.h</itemPath>
+              </logicalFolder>
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/FreeRTOS/peripheral/sercom/usart/plib_sercom1_usart.h</itemPath>
                 <itemPath>../src/config/FreeRTOS/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
@@ -647,6 +651,9 @@
               <itemPath>../src/config/FreeRTOS/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="sercom" projectFiles="true">
+              <logicalFolder name="f2" displayName="spi_master" projectFiles="true">
+                <itemPath>../src/config/FreeRTOS/peripheral/sercom/spi_master/plib_sercom0_spi_master.c</itemPath>
+              </logicalFolder>
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/FreeRTOS/peripheral/sercom/usart/plib_sercom1_usart.c</itemPath>
               </logicalFolder>
@@ -719,6 +726,22 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
         </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="gfx_mono" projectFiles="true">
+        <itemPath>../src/gfx_mono/gfx_definitions.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_framebuffer.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_framebuffer.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_generic.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_generic.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_text.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_text.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_ug_2832hsweg04.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_mono_ug_2832hsweg04.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_ssd1306.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_ssd1306.h</itemPath>
+        <itemPath>../src/gfx_mono/gfx_sysfont.c</itemPath>
+        <itemPath>../src/gfx_mono/gfx_sysfont.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="wolfcrypt" projectFiles="true">
         <logicalFolder name="f1" displayName="port" projectFiles="true">
@@ -870,6 +893,7 @@
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/lib_wolfcrypt.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/nvmctrl.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/project.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sercom0.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sercom1.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/settings.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_command.yml</itemPath>
@@ -898,14 +922,14 @@
         <targetDevice>ATSAME54P20A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>Simulator</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>3.01</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.5.87"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1890,6 +1914,8 @@
         <property key="warningmessagebreakoptions.W0034_CORE_UNALIGNED_MEMORY_ACCESS"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0035_CORE_UNIMPLEMENTED_RAMACCESS_NOTRAP"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0036_UNIMPLEMENTED_INSTRUCTION"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0040_FPU_DIFF_CP10_CP11"
                   value="report"/>

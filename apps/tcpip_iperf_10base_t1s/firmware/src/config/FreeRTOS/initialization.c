@@ -460,6 +460,8 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+    SERCOM0_SPI_Initialize();
+
 
 
     /* Initialize the MIIM Driver */

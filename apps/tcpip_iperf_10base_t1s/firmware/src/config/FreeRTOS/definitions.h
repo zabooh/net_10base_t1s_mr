@@ -63,6 +63,7 @@
 #include "driver/gmac/drv_gmac.h"
 #include "peripheral/sercom/usart/plib_sercom1_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
+#include "peripheral/sercom/spi_master/plib_sercom0_spi_master.h"
 #include "system/command/sys_command.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
@@ -75,7 +76,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "app.h"
-
+#include "gfx_mono/gfx_definitions.h"
 
 
 // DOM-IGNORE-BEGIN

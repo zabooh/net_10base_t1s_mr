@@ -62,6 +62,7 @@ extern "C" {
     typedef enum {
         /* Application's state machine's initial state. */
         APP_MIIM_INIT = 0,
+        APP_DISPLAY_INIT,
         APP_WAIT_STACK_INIT,
         APP_READ_OPERATION_MODE,
         APP_READ_PLCA_CONFIGURATION,

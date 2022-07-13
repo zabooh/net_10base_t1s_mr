@@ -65,6 +65,87 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/*** Macros for BUTTON2 pin ***/
+#define BUTTON2_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = ((uint32_t)1U << 8U))
+#define BUTTON2_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = ((uint32_t)1U << 8U))
+#define BUTTON2_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = ((uint32_t)1U << 8U))
+#define BUTTON2_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = ((uint32_t)1U << 8U))
+#define BUTTON2_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = ((uint32_t)1U << 8U))
+#define BUTTON2_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 8U)) & 0x01U)
+#define BUTTON2_PIN                  PORT_PIN_PA08
+
+/*** Macros for BUTTON3 pin ***/
+#define BUTTON3_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = ((uint32_t)1U << 9U))
+#define BUTTON3_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = ((uint32_t)1U << 9U))
+#define BUTTON3_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = ((uint32_t)1U << 9U))
+#define BUTTON3_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = ((uint32_t)1U << 9U))
+#define BUTTON3_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = ((uint32_t)1U << 9U))
+#define BUTTON3_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 9U)) & 0x01U)
+#define BUTTON3_PIN                  PORT_PIN_PA09
+
+/*** Macros for LED1 pin ***/
+#define LED1_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = ((uint32_t)1U << 14U))
+#define LED1_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = ((uint32_t)1U << 14U))
+#define LED1_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = ((uint32_t)1U << 14U))
+#define LED1_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = ((uint32_t)1U << 14U))
+#define LED1_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = ((uint32_t)1U << 14U))
+#define LED1_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 14U)) & 0x01U)
+#define LED1_PIN                  PORT_PIN_PB14
+
+/*** Macros for LED2 pin ***/
+#define LED2_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = ((uint32_t)1U << 15U))
+#define LED2_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = ((uint32_t)1U << 15U))
+#define LED2_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = ((uint32_t)1U << 15U))
+#define LED2_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = ((uint32_t)1U << 15U))
+#define LED2_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = ((uint32_t)1U << 15U))
+#define LED2_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 15U)) & 0x01U)
+#define LED2_PIN                  PORT_PIN_PB15
+
+/*** Macros for DATA_CMD_SEL pin ***/
+#define DATA_CMD_SEL_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = ((uint32_t)1U << 10U))
+#define DATA_CMD_SEL_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = ((uint32_t)1U << 10U))
+#define DATA_CMD_SEL_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = ((uint32_t)1U << 10U))
+#define DATA_CMD_SEL_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = ((uint32_t)1U << 10U))
+#define DATA_CMD_SEL_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = ((uint32_t)1U << 10U))
+#define DATA_CMD_SEL_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 10U)) & 0x01U)
+#define DATA_CMD_SEL_PIN                  PORT_PIN_PD10
+
+/*** Macros for BUTTON1 pin ***/
+#define BUTTON1_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = ((uint32_t)1U << 11U))
+#define BUTTON1_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = ((uint32_t)1U << 11U))
+#define BUTTON1_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = ((uint32_t)1U << 11U))
+#define BUTTON1_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = ((uint32_t)1U << 11U))
+#define BUTTON1_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = ((uint32_t)1U << 11U))
+#define BUTTON1_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 11U)) & 0x01U)
+#define BUTTON1_PIN                  PORT_PIN_PD11
+
+/*** Macros for LED3 pin ***/
+#define LED3_Set()               (PORT_REGS->GROUP[3].PORT_OUTSET = ((uint32_t)1U << 12U))
+#define LED3_Clear()             (PORT_REGS->GROUP[3].PORT_OUTCLR = ((uint32_t)1U << 12U))
+#define LED3_Toggle()            (PORT_REGS->GROUP[3].PORT_OUTTGL = ((uint32_t)1U << 12U))
+#define LED3_OutputEnable()      (PORT_REGS->GROUP[3].PORT_DIRSET = ((uint32_t)1U << 12U))
+#define LED3_InputEnable()       (PORT_REGS->GROUP[3].PORT_DIRCLR = ((uint32_t)1U << 12U))
+#define LED3_Get()               (((PORT_REGS->GROUP[3].PORT_IN >> 12U)) & 0x01U)
+#define LED3_PIN                  PORT_PIN_PD12
+
+/*** Macros for DISPLAY_RESET pin ***/
+#define DISPLAY_RESET_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = ((uint32_t)1U << 28U))
+#define DISPLAY_RESET_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = ((uint32_t)1U << 28U))
+#define DISPLAY_RESET_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = ((uint32_t)1U << 28U))
+#define DISPLAY_RESET_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = ((uint32_t)1U << 28U))
+#define DISPLAY_RESET_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = ((uint32_t)1U << 28U))
+#define DISPLAY_RESET_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 28U)) & 0x01U)
+#define DISPLAY_RESET_PIN                  PORT_PIN_PB28
+
+/*** Macros for DISPLAY_SS_N pin ***/
+#define DISPLAY_SS_N_Set()               (PORT_REGS->GROUP[2].PORT_OUTSET = ((uint32_t)1U << 24U))
+#define DISPLAY_SS_N_Clear()             (PORT_REGS->GROUP[2].PORT_OUTCLR = ((uint32_t)1U << 24U))
+#define DISPLAY_SS_N_Toggle()            (PORT_REGS->GROUP[2].PORT_OUTTGL = ((uint32_t)1U << 24U))
+#define DISPLAY_SS_N_OutputEnable()      (PORT_REGS->GROUP[2].PORT_DIRSET = ((uint32_t)1U << 24U))
+#define DISPLAY_SS_N_InputEnable()       (PORT_REGS->GROUP[2].PORT_DIRCLR = ((uint32_t)1U << 24U))
+#define DISPLAY_SS_N_Get()               (((PORT_REGS->GROUP[2].PORT_IN >> 24U)) & 0x01U)
+#define DISPLAY_SS_N_PIN                  PORT_PIN_PC24
+
 // *****************************************************************************
 /* PORT Group
 

@@ -503,13 +503,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 62951755A45BA873C9775C77F461A8DF
-- generatedChecksum: D167EDFA343A4039F725CA530EFAD190
+- generatedChecksum: 0285EE9E00889B2A04E59B512FA1CFF6
   logicalPath: config/FreeRTOS
   name: initialization.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D167EDFA343A4039F725CA530EFAD190
+  userChecksum: 0285EE9E00889B2A04E59B512FA1CFF6
 - generatedChecksum: 479A727027F5AD9CBBDC717FD86D8B5E
   logicalPath: wolfcrypt
   name: integer.c
@@ -517,13 +517,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 479A727027F5AD9CBBDC717FD86D8B5E
-- generatedChecksum: 9A38E81BC474E8054DA3F45C59837A7E
+- generatedChecksum: FB3E20B36ECE82F78EE45466402015E3
   logicalPath: config/FreeRTOS
   name: interrupts.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 9A38E81BC474E8054DA3F45C59837A7E
+  userChecksum: FB3E20B36ECE82F78EE45466402015E3
 - generatedChecksum: C4562A27983E222E942F8C6A72E7B80C
   logicalPath: config/FreeRTOS/library/tcpip/src
   name: iperf.c
@@ -629,13 +629,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 1D0C683A87116C624525DFB733425B7D
-- generatedChecksum: 022DA0EB1BFF82A6CD65EBE14CCFD36A
+- generatedChecksum: 6BCBDF39DB2066567A15DA79A547F152
   logicalPath: config/FreeRTOS/peripheral/clock
   name: plib_clock.c
   physicalPath: peripheral/clock
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 022DA0EB1BFF82A6CD65EBE14CCFD36A
+  userChecksum: 6BCBDF39DB2066567A15DA79A547F152
 - generatedChecksum: D903E8D9DCBC4107D0AA841E07F653BA
   logicalPath: config/FreeRTOS/peripheral/cmcc
   name: plib_cmcc.c
@@ -650,13 +650,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: C3ECDED3D6301DB0DE622293ED615D21
-- generatedChecksum: F6EBBE26BDED690F3FC961359CF20AA7
+- generatedChecksum: 73D79D03A722FD024A0DE2795CC1A3AB
   logicalPath: config/FreeRTOS/peripheral/nvic
   name: plib_nvic.c
   physicalPath: peripheral/nvic
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F6EBBE26BDED690F3FC961359CF20AA7
+  userChecksum: 73D79D03A722FD024A0DE2795CC1A3AB
 - generatedChecksum: 903E0413B53BA9E8980C740E65F59966
   logicalPath: config/FreeRTOS/peripheral/nvmctrl
   name: plib_nvmctrl.c
@@ -664,13 +664,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 903E0413B53BA9E8980C740E65F59966
-- generatedChecksum: ACAD151E936C0B36EC05641491DF467C
+- generatedChecksum: F8051E754DFA09454AEE8D31D6FD4B63
   logicalPath: config/FreeRTOS/peripheral/port
   name: plib_port.c
   physicalPath: peripheral/port
   security: NON_SECURE
   type: SOURCE
-  userChecksum: ACAD151E936C0B36EC05641491DF467C
+  userChecksum: F8051E754DFA09454AEE8D31D6FD4B63
+- generatedChecksum: C50C35A97C64CB84B60089BF9B6FD513
+  logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
+  name: plib_sercom0_spi_master.c
+  physicalPath: peripheral/sercom/spi_master
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: C50C35A97C64CB84B60089BF9B6FD513
 - generatedChecksum: C99390AC8F377CDEB638F4BA9EC865BD
   logicalPath: config/FreeRTOS/peripheral/sercom/usart
   name: plib_sercom1_usart.c
@@ -1924,13 +1931,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 7959E2B94CEE186632B984636D40C252
-- generatedChecksum: D152A936D87BB1CC867FF5337283E60B
+- generatedChecksum: 6259834F22AF0F3083935D7E7DCF4859
   logicalPath: config/FreeRTOS
   name: definitions.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: D152A936D87BB1CC867FF5337283E60B
+  userChecksum: 6259834F22AF0F3083935D7E7DCF4859
 - generatedChecksum: 1EA4EDD5EA90F43EC407DE32441159A9
   logicalPath: FreeRTOS/Source/include
   name: deprecated_definitions.h
@@ -2575,13 +2582,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: C492FEAFD776B304917664DD0F4F8C11
-- generatedChecksum: 9F6ECD1F826B5B2FEC05CBC5E73E154A
+- generatedChecksum: CCDDAA0FEFCC9210E0FEC1696B04C411
   logicalPath: config/FreeRTOS
   name: interrupts.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 9F6ECD1F826B5B2FEC05CBC5E73E154A
+  userChecksum: CCDDAA0FEFCC9210E0FEC1696B04C411
 - generatedChecksum: DA36D91DA4951931C8023B68D22F969D
   logicalPath: config/FreeRTOS/library/tcpip
   name: iperf.h
@@ -3016,13 +3023,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 265847151EACC813B7C7825442C21A32
-- generatedChecksum: C6737E53E26C344746EA6B0E8B995E3A
+- generatedChecksum: F0100A1A394512F369D8B0401E5AD741
   logicalPath: config/FreeRTOS/peripheral/port
   name: plib_port.h
   physicalPath: peripheral/port
   security: NON_SECURE
   type: HEADER
-  userChecksum: C6737E53E26C344746EA6B0E8B995E3A
+  userChecksum: F0100A1A394512F369D8B0401E5AD741
+- generatedChecksum: 7BE8D2DC4C674C3542390C9E75603EB6
+  logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
+  name: plib_sercom0_spi_master.h
+  physicalPath: peripheral/sercom/spi_master
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 7BE8D2DC4C674C3542390C9E75603EB6
 - generatedChecksum: 5F3FACF26E912ECB172F6E4B1EBDC50D
   logicalPath: config/FreeRTOS/peripheral/sercom/usart
   name: plib_sercom1_usart.h
@@ -3030,6 +3044,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 5F3FACF26E912ECB172F6E4B1EBDC50D
+- generatedChecksum: BED7AF34A8D633C6994B780C19D7157F
+  logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
+  name: plib_sercom_spi_master_common.h
+  physicalPath: peripheral/sercom/spi_master
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: BED7AF34A8D633C6994B780C19D7157F
 - generatedChecksum: 881B1D67FA4C320BBD6AC86344695C9C
   logicalPath: config/FreeRTOS/peripheral/sercom/usart
   name: plib_sercom_usart_common.h
