@@ -815,6 +815,13 @@ children:
       - type: User
         attributes: {value: 'True'}
   - type: String
+    attributes: {id: PIN_33_LAT}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: High}
+  - type: String
     attributes: {id: PIN_33_MODE}
     children:
     - type: Values
@@ -834,7 +841,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: ''}
+        attributes: {value: 'True'}
   - type: String
     attributes: {id: PIN_34_DIR}
     children:
@@ -864,6 +871,13 @@ children:
       - type: User
         attributes: {value: 'True'}
   - type: String
+    attributes: {id: PIN_34_LAT}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: High}
+  - type: String
     attributes: {id: PIN_34_MODE}
     children:
     - type: Values
@@ -883,7 +897,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: ''}
+        attributes: {value: 'True'}
   - type: String
     attributes: {id: PIN_43_DIR}
     children:
@@ -1039,6 +1053,13 @@ children:
       - type: User
         attributes: {value: 'True'}
   - type: String
+    attributes: {id: PIN_50_LAT}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: High}
+  - type: String
     attributes: {id: PIN_50_MODE}
     children:
     - type: Values
@@ -1058,7 +1079,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: ''}
+        attributes: {value: 'True'}
   - type: String
     attributes: {id: PIN_51_DIR}
     children:
@@ -1326,6 +1347,13 @@ children:
       - type: Dynamic
         attributes: {id: core, value: '0x0'}
   - type: String
+    attributes: {id: PORT_GROUP_0_OUT}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0x300'}
+  - type: String
     attributes: {id: PORT_GROUP_0_PAD_12}
     children:
     - type: Values
@@ -1443,14 +1471,14 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '0x2'}
+        attributes: {id: core, value: '0x6'}
   - type: String
     attributes: {id: PORT_GROUP_0_PINCFG9}
     children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '0x2'}
+        attributes: {id: core, value: '0x6'}
   - type: Boolean
     attributes: {id: PORT_GROUP_0_PIN_12_USED}
     children:
@@ -1886,6 +1914,13 @@ children:
       - type: Dynamic
         attributes: {id: core, value: '0x1400'}
   - type: String
+    attributes: {id: PORT_GROUP_3_OUT}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0x800'}
+  - type: String
     attributes: {id: PORT_GROUP_3_PAD_10}
     children:
     - type: Values
@@ -1919,7 +1954,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '0x2'}
+        attributes: {id: core, value: '0x6'}
   - type: String
     attributes: {id: PORT_GROUP_3_PINCFG12}
     children:

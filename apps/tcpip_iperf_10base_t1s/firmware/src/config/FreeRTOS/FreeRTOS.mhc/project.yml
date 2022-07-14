@@ -664,13 +664,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 903E0413B53BA9E8980C740E65F59966
-- generatedChecksum: F8051E754DFA09454AEE8D31D6FD4B63
+- generatedChecksum: CF213F5A7D58FB7722FEA1B500D357F9
   logicalPath: config/FreeRTOS/peripheral/port
   name: plib_port.c
   physicalPath: peripheral/port
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F8051E754DFA09454AEE8D31D6FD4B63
+  userChecksum: CF213F5A7D58FB7722FEA1B500D357F9
 - generatedChecksum: C50C35A97C64CB84B60089BF9B6FD513
   logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
   name: plib_sercom0_spi_master.c
@@ -1937,7 +1937,7 @@ files:
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 6259834F22AF0F3083935D7E7DCF4859
+  userChecksum: 2B15B4FC9DFD27705E422404BF601E61
 - generatedChecksum: 1EA4EDD5EA90F43EC407DE32441159A9
   logicalPath: FreeRTOS/Source/include
   name: deprecated_definitions.h

@@ -87,6 +87,9 @@ void APP_Initialize(void)
 {
 	/* Place the App state machine in its initial state. */
 	appData.state = APP_DISPLAY_INIT;    
+    LED1_Set();
+    LED2_Set();
+    LED3_Set();
 }
 
 /******************************************************************************
@@ -96,9 +99,18 @@ void APP_Initialize(void)
   Remarks:
     See prototype in app.h.
  */
+
 void APP_Tasks(void)
 {
 	DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    
+    {
+        if(BUTTON1_Get())LED1_Set();else LED1_Clear();
+        if(BUTTON2_Get())LED2_Set();else LED2_Clear();
+        if(BUTTON3_Get())LED3_Set();else LED3_Clear();
+    }
+    
+    
 	/* Check the application's current state. */
 	switch (appData.state)
     {
@@ -106,8 +118,6 @@ void APP_Tasks(void)
         case APP_DISPLAY_INIT:
         {
             gfx_mono_ssd1306_init();
-            gfx_mono_draw_string("Rock and Roll\n"
-                                 "   ==> <==    ", 0, 0, &sysfont);
             appData.state = APP_WAIT_STACK_INIT;
             break;
         }
@@ -199,6 +209,12 @@ void APP_Tasks(void)
             else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */
             {
                 SYS_CONSOLE_PRINT(" Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));
+                {
+                    char str[100];                    
+                    sprintf(str,"LAN867x PLCA\n" TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0 "\nId: %d Count: %d ", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));
+                    
+                    gfx_mono_draw_string(str, 0, 0, &sysfont);                
+                }
                 appData.state = APP_MIIM_CLOSE;
             }
             break;
