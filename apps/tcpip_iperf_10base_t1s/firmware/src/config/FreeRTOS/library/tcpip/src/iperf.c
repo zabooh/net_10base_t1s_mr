@@ -807,7 +807,7 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
    				kbps = (pIState->totalLen * ((double) 8)) / msec;
             }
             gfx_mono_print_scroll("AVG: %4lu Kbps",(unsigned long) (kbps + ((double) 0.5)));
-            gfx_mono_print_scroll(" iperf done");
+            gfx_mono_print_scroll("iperf done");
             (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "    - [0.0- %lu.%lu sec] %3lu/ %3lu (%2lu%%)    %4lu Kbps\r\n",
                              (unsigned long)(msec/1000),
                              (unsigned long)((msec%1000)/100),
