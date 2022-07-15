@@ -43,8 +43,6 @@
 /*
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
-#include "stddef.h"
-#include "assert.h"
 
 #include "gfx_definitions.h"
 #include "gfx_mono.h"
@@ -276,6 +274,32 @@ void gfx_mono_draw_string(const char *str, gfx_coord_t x, gfx_coord_t y,
     } while (*(++str));
 }
 
+
+void gfx_mono_draw_string_n(const char *str, int len, gfx_coord_t x, gfx_coord_t y,
+        const struct font *font) {
+    /* Save X in order to know where to return to on CR. */
+    const gfx_coord_t start_of_string_position_x = x;
+
+    /* Sanity check on parameters, assert if str or font is NULL. */
+    assert(str != NULL);
+    assert(font != NULL);
+
+    /* Draw characters until trailing null byte */
+    do {
+        /* Handle '\n' as newline, draw normal characters. */
+        if (*str == '\n') {
+            x = start_of_string_position_x;
+            y += font->height + 1;
+        } else if (*str == '\r') {
+            /* Skip '\r' characters. */
+        } else {
+            gfx_mono_draw_char(*str, x, y, font);
+            x += font->width;
+        }
+        ++str;
+    } while (--len);
+}
+
 /**
  * \brief Draws a string located in program memory to the display
  *
@@ -415,4 +439,47 @@ void gfx_mono_get_progmem_string_bounding_box(char PROGMEM_PTR_T str,
     /* Return values through references */
     *width = max_width;
     *height = max_height;
+}
+
+//void gfx_mono_print_scroll(const char* format, ...){
+//    char tmpBuf[SYS_CMD_PRINT_BUFFER_SIZE];
+//    size_t len = 0;
+//    size_t padding = 0;
+//    va_list args = {0};
+//    va_start( args, format );
+//    
+//    gfx_mono_draw_string(str, 0, 23, &sysfont);
+//    vTaskDelay( pdMS_TO_TICKS( 1000 ) );
+//    gfx_mono_scroll_Line_6x7();    
+//}
+
+extern struct font sysfont;
+
+#define PRINT_BUFF (256)
+
+void __attribute__((optimize("-O0"))) gfx_mono_print_scroll(const char* format, ...) {
+    char OutputBuffer[PRINT_BUFF];
+    char LinePrintBuffer[22];
+    int ix;
+    size_t len = 0;
+    va_list args = {0};
+    va_start(args, format);
+    len = vsnprintf(OutputBuffer, PRINT_BUFF, format, args);
+    va_end(args);
+
+    for (ix = 0; ix < len; ix += 21) {
+        gfx_mono_scroll_Line_6x7();
+        memset(LinePrintBuffer, 0x20, 22);
+        int temp_len;
+        if (len > 21) {
+            temp_len = 21;
+            if (ix > 0) {
+                temp_len = len - 21;
+            }
+        } else {
+            temp_len = len;
+        }
+        memcpy(LinePrintBuffer, &OutputBuffer[ix], temp_len);
+        gfx_mono_draw_string_n(LinePrintBuffer, 21, 0, 24, &sysfont);
+    }
 }

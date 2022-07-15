@@ -53,6 +53,17 @@
 uint8_t framebuffer[GFX_MONO_LCD_FRAMEBUFFER_SIZE];
 #endif
 
+void gfx_mono_scroll_Line_6x7(void) {
+    int ix;
+    for (ix = 0; ix < (128*3); ix++) {
+        framebuffer[ix] = framebuffer[ix + 128];
+    }
+    for ( ; ix < 512; ix++) {
+        framebuffer[ix] = 0;
+    }  
+    gfx_mono_ssd1306_put_framebuffer();
+}
+
 /**
  * \brief Initialize SSD1306 controller and LCD display.
  * It will also write the graphic controller RAM to all zeroes.

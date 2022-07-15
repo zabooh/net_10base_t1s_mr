@@ -47,6 +47,7 @@
 #define GFX_MONO_TEXT_H_INCLUDED
 
 #include <stdint.h>
+#include <stdio.h>
 #include "gfx_mono.h"
 
 #ifdef __cplusplus
@@ -107,6 +108,9 @@ extern "C" {
     void gfx_mono_draw_string(const char *str, const gfx_coord_t x,
             const gfx_coord_t y, const struct font *font);
 
+    void gfx_mono_draw_string_n(const char *str, int len, gfx_coord_t x, gfx_coord_t y,
+        const struct font *font);
+    
     void gfx_mono_get_string_bounding_box(char const *str, const struct font *font,
             gfx_coord_t *width, gfx_coord_t *height);
 

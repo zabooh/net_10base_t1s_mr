@@ -158,6 +158,7 @@ extern "C" {
     void gfx_mono_ssd1306_mask_byte(gfx_coord_t page, gfx_coord_t column,
             gfx_mono_color_t pixel_mask, gfx_mono_color_t color);
 
+    void gfx_mono_scroll_Line_6x7(void);
     /** @} */
 
 #ifdef __cplusplus
