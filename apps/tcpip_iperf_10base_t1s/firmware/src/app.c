@@ -150,6 +150,7 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
             LED1_Clear();
             MyTxQueueErase();
             SERCOM1_USART_Virtual_Send("iperf -c 192.168.1.1\n");
+            gfx_mono_print_scroll("iperf start client");
         }
         old_but1 = temp_but1;
 
@@ -298,7 +299,10 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
 
                     SYS_CONSOLE_PRINT(TCPIP_STACK_NetNameGet(netH));
                     SYS_CONSOLE_PRINT(" IP Address: ");
-                    SYS_CONSOLE_PRINT("%d.%d.%d.%d \r\n", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
+                    char str[100];
+                    sprintf(str,"%d.%d.%d.%d", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
+                    SYS_CONSOLE_PRINT("%s\r\n", str);
+                    gfx_mono_print_scroll("new:%s",str);
                 }
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
