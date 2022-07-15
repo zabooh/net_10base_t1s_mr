@@ -537,7 +537,7 @@ files:
   physicalPath: library/tcpip/src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: C4562A27983E222E942F8C6A72E7B80C
+  userChecksum: 6D351A9C077FD3EFDA235355444AEA7F
 - generatedChecksum: 083BF1AC46285D9800AD528C6BBC5750
   logicalPath: config/FreeRTOS/library/tcpip/src
   name: ipv4.c
@@ -691,7 +691,7 @@ files:
   physicalPath: peripheral/sercom/usart
   security: NON_SECURE
   type: SOURCE
-  userChecksum: E2D2F428210F9BE598C6B4A5A23B88A3
+  userChecksum: A5E79E864B9BCABE0550A7A75E2EB016
 - generatedChecksum: CC79D51844D7DC96AE192AEC873F43F2
   logicalPath: config/FreeRTOS/peripheral/tc
   name: plib_tc0.c
@@ -1693,13 +1693,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 15AB6693CC2E1EE7AB845EE42A6AC762
-- generatedChecksum: 89D38D5419EB45DA55BAA5B700DF3A9D
+- generatedChecksum: BEB73DC1C40E74C9D0B74E818706230F
   logicalPath: config/FreeRTOS
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 79B164CB30C5F7A6CC9C2A7E5A1F2F11
+  userChecksum: BEB73DC1C40E74C9D0B74E818706230F
 - generatedChecksum: 7EF1FAD7778FEEAC9467270306D7F7C0
   logicalPath: packs/CMSIS/CMSIS/Core/Include
   name: core_cm4.h
@@ -3050,7 +3050,7 @@ files:
   physicalPath: peripheral/sercom/usart
   security: NON_SECURE
   type: HEADER
-  userChecksum: 5F3FACF26E912ECB172F6E4B1EBDC50D
+  userChecksum: E8E887496F8656141F45EE3C448D15DA
 - generatedChecksum: BED7AF34A8D633C6994B780C19D7157F
   logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
   name: plib_sercom_spi_master_common.h

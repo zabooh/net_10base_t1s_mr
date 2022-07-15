@@ -149,7 +149,7 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
         if( temp_but1 == 0 && old_but1 == 1 ){
             LED1_Clear();
             MyTxQueueErase();
-            SERCOM1_USART_Virtual_Send("iperf -c 192.168.1.1\n");
+            SERCOM1_USART_Virtual_Send("iperf -s\n");
         }
         old_but1 = temp_but1;
 
