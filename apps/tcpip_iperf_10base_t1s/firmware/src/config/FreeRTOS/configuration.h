@@ -162,7 +162,7 @@ extern "C" {
 #define DRV_ETHPHY_NEG_DONE_TMO                     0
 #define DRV_ETHPHY_RESET_CLR_TMO                    500
 #define DRV_ETHPHY_PLCA_ENABLED
-#define DRV_ETHPHY_PLCA_LOCAL_NODE_ID               0
+#define DRV_ETHPHY_PLCA_LOCAL_NODE_ID               1
 #define DRV_ETHPHY_PLCA_NODE_COUNT                  8
 #define DRV_ETHPHY_PLCA_MAX_BURST_COUNT             0
 #define DRV_ETHPHY_PLCA_BURST_TIMER                 128
@@ -309,39 +309,6 @@ extern "C" {
 #define TCPIP_IPV4_COMMANDS false
 
 #define TCPIP_IPV4_FORWARDING_ENABLE    false 
-
-
-
-
-
-/*** DHCP Server Configuration ***/
-#define TCPIP_STACK_USE_DHCP_SERVER
-#define TCPIP_DHCPS_TASK_PROCESS_RATE                     	200
-#define TCPIP_DHCPS_MAX_NUMBER_INSTANCES					1
-#define TCPIP_DHCPS_LEASE_ENTRIES_DEFAULT                   15
-#define TCPIP_DHCPS_LEASE_SOLVED_ENTRY_TMO                  1200
-#define TCPIP_DHCPS_LEASE_REMOVED_BEFORE_ACK                5
-#define TCPIP_DHCP_SERVER_DELETE_OLD_ENTRIES              	true
-#define TCPIP_DHCPS_LEASE_DURATION	TCPIP_DHCPS_LEASE_SOLVED_ENTRY_TMO
-
-/*** DHCP Server Instance 0 Configuration ***/
-#define TCPIP_DHCPS_DEFAULT_IP_ADDRESS_RANGE_START_IDX0             "192.168.1.100"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_IP_ADDRESS_IDX0                  "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_NETMASK_ADDRESS_IDX0             "255.255.255.0"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_GATEWAY_ADDRESS_IDX0             "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_PRIMARY_DNS_ADDRESS_IDX0         "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_SECONDARY_DNS_ADDRESS_IDX0       "192.168.1.1"
-
-#define TCPIP_DHCP_SERVER_INTERFACE_INDEX_IDX0                      0
-
-#define TCPIP_DHCP_SERVER_POOL_ENABLED_IDX0                         true
-
-#define TCPIP_DHCP_SERVER_POOL_INDEX_IDX0								0
 
 
 

@@ -94,8 +94,6 @@ children:
     children:
     - type: Values
       children:
-      - type: Dynamic
-        attributes: {id: tcpipDhcps, value: 'true'}
       - type: User
         attributes: {value: 'true'}
 - type: ElementPosition

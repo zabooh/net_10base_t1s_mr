@@ -625,7 +625,6 @@
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/tcpip_notify.c</itemPath>
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/tcpip_packet.c</itemPath>
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/udp.c</itemPath>
-                <itemPath>../src/config/FreeRTOS/library/tcpip/src/dhcps.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -857,7 +856,6 @@
           <logicalFolder name="f2" displayName="BASIC_CONFIGURATION" projectFiles="true">
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/BASIC_CONFIGURATION.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipCmd.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipDhcps.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipNetConfig.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipStack.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpip_basic_config.yml</itemPath>
@@ -1154,8 +1152,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/Users/m91221/T1S_HEAD/net_10base_t1s_mr3/net_10base_t1s_mr/apps/tcpip_iperf_10base_t1s/firmware/tcpip_iperf_10base_t1s_freertos.X/debug/FreeRTOS/tcpip_iperf_10base_t1s_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
