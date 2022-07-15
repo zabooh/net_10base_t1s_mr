@@ -625,6 +625,7 @@
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/tcpip_notify.c</itemPath>
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/tcpip_packet.c</itemPath>
                 <itemPath>../src/config/FreeRTOS/library/tcpip/src/udp.c</itemPath>
+                <itemPath>../src/config/FreeRTOS/library/tcpip/src/dhcps.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -856,6 +857,7 @@
           <logicalFolder name="f2" displayName="BASIC_CONFIGURATION" projectFiles="true">
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/BASIC_CONFIGURATION.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipCmd.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipDhcps.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipNetConfig.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipStack.yml</itemPath>
             <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpip_basic_config.yml</itemPath>
@@ -928,8 +930,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.5.87"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.5.87"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -991,7 +993,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/FreeRTOS;../src/config/FreeRTOS/library;../src/config/FreeRTOS/library/tcpip/src;../src/config/FreeRTOS/library/tcpip/src/common;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/;../src/packs/CMSIS/CMSIS/Core/Include;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F;../src/third_party/wolfssl;../src/third_party/wolfssl/wolfssl"/>
+                  value="../src;../src/config/FreeRTOS;../src/config/FreeRTOS/library;../src/config/FreeRTOS/library/tcpip/src;../src/config/FreeRTOS/library/tcpip/src/common;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/;../src/packs/CMSIS/CMSIS/Core/Include;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F;../src/third_party/wolfssl;../src/third_party/wolfssl/wolfssl;..\src\gfx_mono"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -1152,6 +1154,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/m91221/T1S_HEAD/net_10base_t1s_mr3/net_10base_t1s_mr/apps/tcpip_iperf_10base_t1s/firmware/tcpip_iperf_10base_t1s_freertos.X/debug/FreeRTOS/tcpip_iperf_10base_t1s_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -1758,6 +1762,8 @@
         <property key="periphComp5.gte" value="gt"/>
         <property key="periphComp6.gte" value="gt"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Users/m91221/T1S_HEAD/net_10base_t1s_mr2/net_10base_t1s_mr/apps/tcpip_iperf_10base_t1s/firmware/tcpip_iperf_10base_t1s_freertos.X/debug/FreeRTOS/tcpip_iperf_10base_t1s_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

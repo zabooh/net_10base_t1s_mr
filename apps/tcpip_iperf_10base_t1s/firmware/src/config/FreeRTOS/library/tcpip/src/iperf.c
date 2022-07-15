@@ -45,6 +45,8 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
 #include "system/command/sys_command.h"
 
+void gfx_mono_print_scroll(const char* format, ...);
+
 //****************************************************************************
 // CONSTANTS (Defines and enums)
 //****************************************************************************
@@ -766,6 +768,8 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
 
             sec = (pIState->lastCheckTime - pIState->startTime) / tickFreq;
 
+            gfx_mono_print_scroll("%4lu Kbps",(unsigned long) (kbps + ((double) 0.5)));
+            
             (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "    - [%2lu- %2lu sec] %3lu/ %3lu (%2lu%%)    %4lu Kbps\r\n",
                       (unsigned long)sec, 
                       (unsigned long)sec + ( (unsigned long) (pIState->mInterval / tickFreq) ),
@@ -802,7 +806,8 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
             {
    				kbps = (pIState->totalLen * ((double) 8)) / msec;
             }
-
+            gfx_mono_print_scroll("AVG: %4lu Kbps",(unsigned long) (kbps + ((double) 0.5)));
+            gfx_mono_print_scroll(" iperf done");
             (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "    - [0.0- %lu.%lu sec] %3lu/ %3lu (%2lu%%)    %4lu Kbps\r\n",
                              (unsigned long)(msec/1000),
                              (unsigned long)((msec%1000)/100),
@@ -815,7 +820,7 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
 
     if ( reportType == 	SESSION_REPORT )
     {
-      (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf: instance %d completed ...", pIState - gIperfState);
+      (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf: instance %d completed\n\r", pIState - gIperfState);
     }
 
     pIState->lastCheckPktId = pIState->pktId;
@@ -1439,7 +1444,7 @@ static void GenericTxEnd(tIperfState* pIState)
 
 static void GenericTxDone(tIperfState* pIState)
 {
-    const void* cmdIoParam = pIState->pCmdIO->cmdIoParam;
+//    const void* cmdIoParam = pIState->pCmdIO->cmdIoParam;
     if ( pIState->statusReported == 0u )
     {
         ReportBW_Jitter_Loss(pIState, SESSION_REPORT);
@@ -1448,13 +1453,13 @@ static void GenericTxDone(tIperfState* pIState)
 
     IperfSetState(pIState, IPERF_STANDBY_STATE);
 
-    (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf instance %d: Tx done. Socket closed.\r\n", pIState - gIperfState);
+//    (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf instance %d: Tx done. Socket closed.\r\n", pIState - gIperfState);
 
     // Clear statistics
     ResetIperfCounters(pIState);
 
     //(pIState->pCmdIO->pCmdApi->msg)(cmdIoParam, "    Back to standby mode.\r\n");
-    (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf: instance %d completed.\r\n", pIState - gIperfState);
+//    (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "iperf: instance %d completed.\r\n", pIState - gIperfState);
 
 }
 

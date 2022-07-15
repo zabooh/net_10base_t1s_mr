@@ -105,6 +105,8 @@ void SERCOM1_USART_ReadThresholdSet(uint32_t nBytesThreshold);
 
 void SERCOM1_USART_ReadCallbackRegister( SERCOM_USART_RING_BUFFER_CALLBACK callback, uintptr_t context);
 
+void SERCOM1_USART_Virtual_Send(char *str);
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

@@ -32,6 +32,7 @@
 #include "system/console/sys_console.h"
 #include "driver/ethphy/src/dynamic/drv_extphy_lan867x.h"
 #include "definitions.h"
+#include "wolfcrypt/types.h"
 
 /******************************************************************************
 *  Global Data Definitions
@@ -59,8 +60,7 @@ static SYS_MODULE_INDEX          miimObjIx = 0;       // MIIM object index
 static LAN867X_REG_OBJ           clientObj = {0};
 static DRV_MIIM_OPERATION_HANDLE opHandle;
 
-extern struct font sysfont;
-
+const void* dhcp_eth_hParam;
 /******************************************************************************
 *  Private function declaration
 ******************************************************************************/
@@ -71,10 +71,31 @@ static DRV_MIIM_RESULT Write_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAd
 static DRV_MIIM_RESULT Write_Bit_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
 #endif
 static DRV_MIIM_RESULT Read_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
+void MONITOR_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param);
 
 /******************************************************************************
-*  Function Definitions
-******************************************************************************/
+ *  Function Definitions
+ ******************************************************************************/
+#define MY_QUEUE_SIZE   512
+uint8_t MyQueue[MY_QUEUE_SIZE];
+uint32_t MyQueue_wr_ix = 0;
+uint32_t MyQueue_rd_ix = 0;
+
+void MyTxQueue(uint8_t byte) {
+    MyQueue[MyQueue_wr_ix++] = byte;
+    if (MyQueue_wr_ix == MY_QUEUE_SIZE)MyQueue_wr_ix = 0;
+}
+ 
+void MyTxQueueErase(void){
+    int ix;
+    for(ix=0;ix<MY_QUEUE_SIZE;ix++){
+        MyQueue[ix]=0;        
+    }
+    MyQueue_wr_ix = 0;
+    MyQueue_rd_ix = 0;
+}
+
+
 
 /*******************************************************************************
   Function:
@@ -90,6 +111,7 @@ void APP_Initialize(void)
     LED1_Set();
     LED2_Set();
     LED3_Set();
+    MyTxQueueErase();
 }
 
 /******************************************************************************
@@ -99,13 +121,39 @@ void APP_Initialize(void)
   Remarks:
     See prototype in app.h.
  */
+void MySend(char *str);
+            //flag_1 = true;
+            //MySend("netinfo\n");
 
-void APP_Tasks(void)
+
+//                     vTaskDelay( pdMS_TO_TICKS( 1000 ) );
+
+void __attribute__((optimize("-O0"))) APP_Tasks(void)
 {
 	DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    int i, nNets;
+    static IPV4_ADDR dwLastIP[2] = {
+        {-1},
+        {-1}
+    };
+    IPV4_ADDR ipAddr;
+    TCPIP_NET_HANDLE netH;
     
     {
-        if(BUTTON1_Get())LED1_Set();else LED1_Clear();
+        static int old_but1 = 0;
+        
+        int temp_but1 = BUTTON1_Get();
+        if( temp_but1 == 1 && old_but1 == 0 ){
+            LED1_Set();            
+        }
+        if( temp_but1 == 0 && old_but1 == 1 ){
+            LED1_Clear();
+            MyTxQueueErase();
+            SERCOM1_USART_Virtual_Send("iperf -c 192.168.1.1\n");
+        }
+        old_but1 = temp_but1;
+
+        
         if(BUTTON2_Get())LED2_Set();else LED2_Clear();
         if(BUTTON3_Get())LED3_Set();else LED3_Clear();
     }
@@ -127,6 +175,7 @@ void APP_Tasks(void)
         {
             if (TCPIP_STACK_Status(sysObj.tcpip) == SYS_STATUS_READY)
             {
+                TCPIP_DHCP_HandlerRegister(TCPIP_STACK_IndexToNet(0), MONITOR_DHCP_eth_Handler, &dhcp_eth_hParam);
                 appData.state = APP_MIIM_INIT;
             }
             break;
@@ -209,11 +258,10 @@ void APP_Tasks(void)
             else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */
             {
                 SYS_CONSOLE_PRINT(" Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));
-                {
-                    char str[100];                    
-                    sprintf(str,"LAN867x PLCA\n" TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0 "\nId: %d Count: %d ", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));
-                    
-                    gfx_mono_draw_string(str, 0, 0, &sysfont);                
+                {                                                           
+                    gfx_mono_print_scroll("LAN867x PLCA"); 
+                    gfx_mono_print_scroll(TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
+                    gfx_mono_print_scroll("Id: %d Count: %d", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));                  
                 }
                 appData.state = APP_MIIM_CLOSE;
             }
@@ -226,10 +274,36 @@ void APP_Tasks(void)
             /* Close and release the handle(instance) to miim, as I do not need access to miim register anymore. */
             local_miim_close();
 
-            appData.state = APP_STATE_SERVICE_TASKS;
+            appData.state = APP_TCPIP_WAIT_FOR_IP;
             break;
         }
 
+        case APP_TCPIP_WAIT_FOR_IP:
+
+            // if the IP address of an interface has changed
+            // display the new value on the system console
+            nNets = TCPIP_STACK_NumberOfNetworksGet();
+
+            for (i = 0; i < nNets; i++) {
+                netH = TCPIP_STACK_IndexToNet(i);
+                if (!TCPIP_STACK_NetIsReady(netH)) {
+                    continue; // interface not ready yet! , 
+                    //looking for another interface, that can be used for communication.
+                }
+                // Now. there is a ready interface that we can use
+                ipAddr.Val = TCPIP_STACK_NetAddress(netH);
+                // display the changed IP address
+                if (dwLastIP[i].Val != ipAddr.Val) {
+                    dwLastIP[i].Val = ipAddr.Val;
+
+                    SYS_CONSOLE_PRINT(TCPIP_STACK_NetNameGet(netH));
+                    SYS_CONSOLE_PRINT(" IP Address: ");
+                    SYS_CONSOLE_PRINT("%d.%d.%d.%d \r\n", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
+                }
+                appData.state = APP_STATE_SERVICE_TASKS;
+            }
+            break;
+            
         case APP_STATE_SERVICE_TASKS:
         {
             /* Any operation to be done. */
@@ -317,4 +391,40 @@ static DRV_MIIM_RESULT Read_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAdd
 	return Lan867x_Read_Register(clientObj, regAddr, rData);
 }
 
+void MONITOR_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param) {
+
+    SYS_CONSOLE_PRINT("%s - ", TCPIP_STACK_NetNameGet(hNet));
+
+    switch (evType) {
+        case DHCP_EVENT_NONE: SYS_CONSOLE_PRINT("DHCP_EVENT_NONE\n\r");
+            break;
+        case DHCP_EVENT_DISCOVER: SYS_CONSOLE_PRINT("DHCP_EVENT_DISCOVER\n\r");
+            break;
+        case DHCP_EVENT_REQUEST: SYS_CONSOLE_PRINT("DHCP_EVENT_REQUEST\n\r");
+            break;
+        case DHCP_EVENT_ACK: SYS_CONSOLE_PRINT("DHCP_EVENT_ACK\n\r");
+            break;
+        case DHCP_EVENT_ACK_INVALID: SYS_CONSOLE_PRINT("DHCP_EVENT_ACK_INVALID\n\r");
+            break;
+        case DHCP_EVENT_DECLINE: SYS_CONSOLE_PRINT("DHCP_EVENT_DECLINE\n\r");
+            break;
+        case DHCP_EVENT_NACK: SYS_CONSOLE_PRINT("DHCP_EVENT_NACK\n\r");
+            break;
+        case DHCP_EVENT_TIMEOUT: SYS_CONSOLE_PRINT("DHCP_EVENT_TIMEOUT\n\r");
+            break;
+        case DHCP_EVENT_BOUND: SYS_CONSOLE_PRINT("DHCP_EVENT_BOUND\n\r");
+            break;
+        case DHCP_EVENT_REQUEST_RENEW: SYS_CONSOLE_PRINT("DHCP_EVENT_REQUEST_RENEW\n\r");
+            break;
+        case DHCP_EVENT_REQUEST_REBIND: SYS_CONSOLE_PRINT("DHCP_EVENT_REQUEST_REBIND\n\r");
+            break;
+        case DHCP_EVENT_CONN_LOST: SYS_CONSOLE_PRINT("DHCP_EVENT_CONN_LOST\n\r");
+            break;
+        case DHCP_EVENT_CONN_ESTABLISHED: SYS_CONSOLE_PRINT("DHCP_EVENT_CONN_ESTABLISHED\n\r");
+            break;
+        case DHCP_EVENT_SERVICE_DISABLED: SYS_CONSOLE_PRINT("DHCP_EVENT_SERVICE_DISABLED\n\r");
+            break;
+
+    }
+}
 /*********************************** End of File *******************************/

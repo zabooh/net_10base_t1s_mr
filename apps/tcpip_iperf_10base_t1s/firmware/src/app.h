@@ -68,6 +68,7 @@ extern "C" {
         APP_READ_PLCA_CONFIGURATION,
         APP_WRITE_PLCA_CONFIGURATION,
         APP_MIIM_CLOSE,
+        APP_TCPIP_WAIT_FOR_IP,
         APP_STATE_SERVICE_TASKS,
         /* TODO: Define states used by the application state machine. */
 

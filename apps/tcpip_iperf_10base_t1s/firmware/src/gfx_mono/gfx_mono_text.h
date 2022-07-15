@@ -47,7 +47,6 @@
 #define GFX_MONO_TEXT_H_INCLUDED
 
 #include <stdint.h>
-#include <stdio.h>
 #include "gfx_mono.h"
 
 #ifdef __cplusplus
@@ -125,6 +124,8 @@ extern "C" {
             const struct font *font, gfx_coord_t *width,
             gfx_coord_t *height);
 
+    void gfx_mono_print_scroll(const char* format, ...);
+    
     /** @} */
 
     /** @} */

@@ -16,6 +16,8 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: 192.168.100.1}
+          - type: User
+            attributes: {value: 192.168.1.1}
       - type: String
         attributes: {id: TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0}
         children:
@@ -23,6 +25,8 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: 192.168.100.1}
+          - type: User
+            attributes: {value: 192.168.1.1}
       - type: String
         attributes: {id: TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0}
         children:
@@ -44,6 +48,8 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: 192.168.100.11}
+          - type: User
+            attributes: {value: 192.168.1.200}
       - type: String
         attributes: {id: TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0}
         children:
@@ -51,6 +57,8 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: '00:04:25:1C:A0:02'}
+          - type: User
+            attributes: {value: '00:04:25:1C:A0:03'}
       - type: String
         attributes: {id: TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0}
         children:
@@ -58,6 +66,20 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: DRV_GMAC_Object}
+      - type: KeyValueSet
+        attributes: {id: TCPIP_NETWORK_INTERFACE_FLAG_DHCP_IDX0}
+        children:
+        - type: Values
+          children:
+          - type: User
+            attributes: {value: '0'}
+      - type: KeyValueSet
+        attributes: {id: TCPIP_NETWORK_INTERFACE_FLAG_DNS_IDX0}
+        children:
+        - type: Values
+          children:
+          - type: User
+            attributes: {value: '2'}
       - type: Boolean
         attributes: {id: TCPIP_STACK_NETWORK_CONFIG_IDX0}
         children:
