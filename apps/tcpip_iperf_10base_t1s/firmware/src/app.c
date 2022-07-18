@@ -140,22 +140,30 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
     TCPIP_NET_HANDLE netH;
     
     {
-        static int old_but1 = 0;
-        
+        static int old_but1 = 0;        
         int temp_but1 = BUTTON1_Get();
-        if( temp_but1 == 1 && old_but1 == 0 ){
+        if( temp_but1 && !old_but1 ){
             LED1_Set();            
         }
-        if( temp_but1 == 0 && old_but1 == 1 ){
+        if( !temp_but1 && old_but1 ){
             LED1_Clear();
-            MyTxQueueErase();
             SERCOM1_USART_Virtual_Send("iperf -c 192.168.1.1\n");
-            gfx_mono_print_scroll("iperf start client");
+            gfx_mono_print_scroll("iperf TCP client");
         }
         old_but1 = temp_but1;
 
-        
-        if(BUTTON2_Get())LED2_Set();else LED2_Clear();
+        static int old_but2 = 0;        
+        int temp_but2 = BUTTON2_Get();
+        if( temp_but2 && !old_but2 ){
+            LED2_Set();            
+        }
+        if( !temp_but2 && old_but2 ){
+            LED2_Clear();
+            SERCOM1_USART_Virtual_Send("iperf -c 192.168.1.1 -u\n");
+            gfx_mono_print_scroll("iperf UDP client");
+        }
+        old_but2 = temp_but2;
+
         if(BUTTON3_Get())LED3_Set();else LED3_Clear();
     }
     
