@@ -114,6 +114,13 @@ void APP_Initialize(void)
     MyTxQueueErase();
 }
 
+volatile bool DHCPS_Restart = false; 
+
+void TriggerDHCPSRestart(void){
+    DHCPS_Restart = true;
+}
+
+
 /******************************************************************************
   Function:
     void APP_Tasks ( void )
@@ -141,25 +148,50 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
     
     {
         static int old_but1 = 0;
-        
         int temp_but1 = BUTTON1_Get();
-        if( temp_but1 == 1 && old_but1 == 0 ){
-            LED1_Set();            
+        if (temp_but1 && !old_but1) {
+            LED1_Set();
         }
-        if( temp_but1 == 0 && old_but1 == 1 ){
+        if (!temp_but1 && old_but1) {
             LED1_Clear();
-            MyTxQueueErase();
-            SERCOM1_USART_Virtual_Send("iperf -s\n");
-            gfx_mono_print_scroll("iperf start server");
+            SERCOM1_USART_Virtual_Receive("iperf -s\n");
+            gfx_mono_print_scroll("iperf TCP server");
         }
         old_but1 = temp_but1;
 
-        
-        if(BUTTON2_Get())LED2_Set();else LED2_Clear();
-        if(BUTTON3_Get())LED3_Set();else LED3_Clear();
+
+        static int old_but2 = 0;
+        int temp_but2 = BUTTON2_Get();
+        if (temp_but2 && !old_but2) {
+            LED2_Set();
+        }
+        if (!temp_but2 && old_but2) {
+            LED2_Clear();
+            SERCOM1_USART_Virtual_Receive("iperf -s -u\n");
+            gfx_mono_print_scroll("iperf UDP server");
+        }
+        old_but2 = temp_but2;
+
+        static int old_but3 = 0;
+        int temp_but3 = BUTTON3_Get();
+        if (temp_but3 && !old_but3) {
+            LED3_Set();
+        }
+        if (!temp_but3 && old_but3) {
+            LED3_Clear();
+            SERCOM1_USART_Virtual_Receive("iperfk\n");
+            gfx_mono_print_scroll("iperf kill server");
+        }
+        old_but3 = temp_but3;
     }
     
-    
+    if(DHCPS_Restart){
+        DHCPS_Restart = false;
+        vTaskDelay( pdMS_TO_TICKS( 4000 ) );
+        SERCOM1_USART_Virtual_Receive("dhcps eth0 off\n");
+        vTaskDelay( pdMS_TO_TICKS( 100 ) );
+        SERCOM1_USART_Virtual_Receive("dhcps eth0 on\n");
+    }
 	/* Check the application's current state. */
 	switch (appData.state)
     {

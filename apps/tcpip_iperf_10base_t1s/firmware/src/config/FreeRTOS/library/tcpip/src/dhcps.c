@@ -656,6 +656,9 @@ static void TCPIP_DHCPS_Process(void)
     _DHCPS_ProcessGetPktandSendResponse();   
 }
 
+
+void TriggerDHCPSRestart(void);
+
 static bool _DHCPS_ProcessGetPktandSendResponse(void)
 {
     uint32_t            buffsize=0;
@@ -702,7 +705,9 @@ static bool _DHCPS_ProcessGetPktandSendResponse(void)
                         break;
                     case TCPIP_DHCPS_FIND_DESCRIPTOR: SYS_CONSOLE_PRINT("TCPIP_DHCPS_FIND_DESCRIPTOR\n\r");
                         break;
-                    case TCPIP_DHCPS_SEND_OFFER: SYS_CONSOLE_PRINT("TCPIP_DHCPS_SEND_OFFER\n\r");
+                    case TCPIP_DHCPS_SEND_OFFER: 
+                        TriggerDHCPSRestart();
+                        SYS_CONSOLE_PRINT("TCPIP_DHCPS_SEND_OFFER\n\r");
                         break;
                     case TCPIP_DHCPS_START_ICMP_PROCESS: SYS_CONSOLE_PRINT("TCPIP_DHCPS_START_ICMP_PROCESS\n\r");
                         break;

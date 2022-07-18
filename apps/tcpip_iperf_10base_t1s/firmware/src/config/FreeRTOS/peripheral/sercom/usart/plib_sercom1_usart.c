@@ -709,7 +709,7 @@ void static SERCOM1_USART_ISR_RX_Handler( void )
     }
 }
 
-void SERCOM1_USART_Virtual_Send(char *str) {
+void SERCOM1_USART_Virtual_Receive(char *str) {
     while (*str!=0) {
         if (SERCOM1_USART_RxPushByte(*str) == true) {
             SERCOM1_USART_ReadNotificationSend();
