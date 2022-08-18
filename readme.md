@@ -77,3 +77,48 @@ ____
 [![](https://img.shields.io/github/stars/Microchip-MPLAB-Harmony/net_10base_t1s.svg?style=social)]()
 [![](https://img.shields.io/github/watchers/Microchip-MPLAB-Harmony/net_10base_t1s.svg?style=social)]()
 
+
+## OLED and iperf Version
+
+To setup the Demo please checkout the branch "server" for one board the the branch "client" for the other board
+
+If you compile please use a XC32 3.01 or 4.00
+
+Choose the FreeRTOS project. 
+
+Here is a short video that shows the usage of the Demo:
+https://vimeo.com/740704827
+
+If you want to use the MHC to reconfigure the projects, you have to install the Harmony Framework. 
+But the different Harmony Repositories have to be at certain Versions (Tags). 
+
+This is coded in 
+
+net_10base_t1s_mr/apps/tcpip_iperf_10base_t1s/firmware/src/config/FreeRTOS/harmony-manifest-success.yml
+
+modules:
+
+    - {name: "csp", version: "v3.11.0"}
+    
+    - {name: "net_10base_t1s", version: "v1.0.1"}
+    
+    - {name: "core", version: "v3.10.0"}
+    
+    - {name: "dev_packs", version: "v3.11.1"}
+    
+    - {name: "wolfssl", version: "v4.7.0"}
+    
+    - {name: "net", version: "v3.7.4"}
+    
+    - {name: "crypto", version: "v3.7.5"}
+    
+    - {name: "CMSIS-FreeRTOS", version: "v10.3.1"}
+    
+    
+    
+
+Either you checkout the Versions by hand with git checkout one by one or you can use the Content Manager and utilize the function "Load Manifest". 
+
+
+
+
