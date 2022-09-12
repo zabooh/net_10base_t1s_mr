@@ -306,7 +306,7 @@ files:
   physicalPath: library/tcpip/src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D89B0FA79F8E9EDF9A704D3551CCF26B
+  userChecksum: 2BCA834D160A27DE827E0AB20A377FB9
 - generatedChecksum: 47635753828B814A05048B66B1AF534B
   logicalPath: config/FreeRTOS/library/tcpip/src
   name: dns.c
@@ -691,7 +691,7 @@ files:
   physicalPath: peripheral/sercom/usart
   security: NON_SECURE
   type: SOURCE
-  userChecksum: A5E79E864B9BCABE0550A7A75E2EB016
+  userChecksum: 660E15BACBB754666352063DA9B328D7
 - generatedChecksum: CC79D51844D7DC96AE192AEC873F43F2
   logicalPath: config/FreeRTOS/peripheral/tc
   name: plib_tc0.c
@@ -3050,7 +3050,7 @@ files:
   physicalPath: peripheral/sercom/usart
   security: NON_SECURE
   type: HEADER
-  userChecksum: E8E887496F8656141F45EE3C448D15DA
+  userChecksum: 4117DA2C3386C45BE625B24215E021A7
 - generatedChecksum: BED7AF34A8D633C6994B780C19D7157F
   logicalPath: config/FreeRTOS/peripheral/sercom/spi_master
   name: plib_sercom_spi_master_common.h
