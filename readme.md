@@ -109,6 +109,13 @@ modules:
     
 
 Either you checkout the Versions by hand with git checkout one by one or you can use the Content Manager and utilize the function "Load Manifest". 
+The third and easiest way is to clone the script from
+    git clone https://github.com/zabooh/scripts_t1s.git
+and run the batch job 
+    git_clone_t1s_oled.bat
+the script clones all neccesary framework, application project source codes and checkout directly the correct version
+
+
 
 
 
