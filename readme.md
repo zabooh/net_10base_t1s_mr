@@ -98,23 +98,14 @@ net_10base_t1s_mr/apps/tcpip_iperf_10base_t1s/firmware/src/config/FreeRTOS/harmo
 
 modules:
 
-    - {name: "csp", version: "v3.11.0"}
-    
+    - {name: "csp", version: "v3.11.0"}    
     - {name: "net_10base_t1s", version: "v1.0.1"}
-    
-    - {name: "core", version: "v3.10.0"}
-    
-    - {name: "dev_packs", version: "v3.11.1"}
-    
-    - {name: "wolfssl", version: "v4.7.0"}
-    
-    - {name: "net", version: "v3.7.4"}
-    
-    - {name: "crypto", version: "v3.7.5"}
-    
+    - {name: "core", version: "v3.10.0"}    
+    - {name: "dev_packs", version: "v3.11.1"}    
+    - {name: "wolfssl", version: "v4.7.0"}    
+    - {name: "net", version: "v3.7.4"}    
+    - {name: "crypto", version: "v3.7.5"}    
     - {name: "CMSIS-FreeRTOS", version: "v10.3.1"}
-    
-    
     
 
 Either you checkout the Versions by hand with git checkout one by one or you can use the Content Manager and utilize the function "Load Manifest". 
