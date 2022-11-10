@@ -5,7 +5,7 @@ frameworkPath: ../../../H3
 processor: ATSAME54P20A
 projectName: tcpip_iperf_10base_t1s_freertos
 settings:
-  PackageFilter: core;crypto;csp;dev_packs;net;net_10base_t1s
+  PackageFilter: core;crypto;csp;Devices;dev_packs;gfx;harmony-services;net;net_10base_t1s;quick_docs;usb
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'

@@ -510,13 +510,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 62951755A45BA873C9775C77F461A8DF
-- generatedChecksum: 35E1C2C2AAC16BF46D9472ED6ECD0131
+- generatedChecksum: B6941DA6FE6BC4990FB871A90AC01574
   logicalPath: config/FreeRTOS
   name: initialization.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 35E1C2C2AAC16BF46D9472ED6ECD0131
+  userChecksum: B6941DA6FE6BC4990FB871A90AC01574
 - generatedChecksum: 479A727027F5AD9CBBDC717FD86D8B5E
   logicalPath: wolfcrypt
   name: integer.c
@@ -636,13 +636,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 1D0C683A87116C624525DFB733425B7D
-- generatedChecksum: 6BCBDF39DB2066567A15DA79A547F152
+- generatedChecksum: 3834ABEF7DE4EA852F6A6A2263DA190D
   logicalPath: config/FreeRTOS/peripheral/clock
   name: plib_clock.c
   physicalPath: peripheral/clock
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 6BCBDF39DB2066567A15DA79A547F152
+  userChecksum: 3834ABEF7DE4EA852F6A6A2263DA190D
 - generatedChecksum: D903E8D9DCBC4107D0AA841E07F653BA
   logicalPath: config/FreeRTOS/peripheral/cmcc
   name: plib_cmcc.c
@@ -699,6 +699,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: CC79D51844D7DC96AE192AEC873F43F2
+- generatedChecksum: 2145BFCDA739F3F3EE53FDE1DBA427F6
+  logicalPath: config/FreeRTOS/peripheral/trng
+  name: plib_trng.c
+  physicalPath: peripheral/trng
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 2145BFCDA739F3F3EE53FDE1DBA427F6
 - generatedChecksum: BE4CB7367E5A5B3DDA671207F469CA45
   logicalPath: wolfcrypt
   name: poly1305.c
@@ -1938,13 +1945,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 7959E2B94CEE186632B984636D40C252
-- generatedChecksum: 6259834F22AF0F3083935D7E7DCF4859
+- generatedChecksum: BF28BA76218E3E0F4A2C387422B07A90
   logicalPath: config/FreeRTOS
   name: definitions.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 2B15B4FC9DFD27705E422404BF601E61
+  userChecksum: 6DD56C79C70945004669389121E0E072
 - generatedChecksum: 1EA4EDD5EA90F43EC407DE32441159A9
   logicalPath: FreeRTOS/Source/include
   name: deprecated_definitions.h
@@ -3079,6 +3086,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: C0A6E5B99D379FC08247B5FA465A54B3
+- generatedChecksum: 0AD0E48DDE24B71101919ED5CF39238C
+  logicalPath: config/FreeRTOS/peripheral/trng
+  name: plib_trng.h
+  physicalPath: peripheral/trng
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 0AD0E48DDE24B71101919ED5CF39238C
 - generatedChecksum: 037298203510024AB873822E41393D02
   logicalPath: packs/ATSAME54P20A_DFP/component
   name: pm.h

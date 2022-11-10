@@ -52,6 +52,7 @@
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "system/time/sys_time.h"
+#include "peripheral/trng/plib_trng.h"
 #include "library/tcpip/tcpip.h"
 #include "system/sys_time_h2_adapter.h"
 #include "system/sys_random_h2_adapter.h"

@@ -53,7 +53,8 @@ extern "C" {
 #define UDP_SERVER_PORT         47134
 #define RECEIVE_BUFFER_SIZE     1024
 #define TRANSMIT_BUFFER_SIZE    1024
-
+#define SERVER_TIME_SLOT        100
+    
     // *****************************************************************************
 
 /* Application states
@@ -111,7 +112,7 @@ extern "C" {
         char transmit_buffer[TRANSMIT_BUFFER_SIZE];
         
         /* TODO: Define any additional data used by the application. */
-
+        uint32_t temp_rnd_identity;
     } APP_DATA;
 
     // *****************************************************************************
