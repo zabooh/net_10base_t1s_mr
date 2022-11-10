@@ -112,6 +112,12 @@ extern "C" {
         uint32_t temp_rnd_identity;
     } APP_DATA;
 
+    typedef struct {
+        uint32_t temp_rnd_identity;
+        uint32_t max_nodes;
+        uint32_t node[DRV_ETHPHY_PLCA_NODE_COUNT];
+    } BROADCAST_DATA;
+    
     // *****************************************************************************
     // *****************************************************************************
     // Section: Application Callback Routines
