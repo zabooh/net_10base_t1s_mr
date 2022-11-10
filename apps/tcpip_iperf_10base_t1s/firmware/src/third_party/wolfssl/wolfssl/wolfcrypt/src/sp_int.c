@@ -2750,7 +2750,7 @@ static
 #endif /* !HAVE_ECC || HAVE_COMP_KEY */
 int sp_cnt_lsb(sp_int* a)
 {
-    int bc = 0;
+    int bc_server = 0;
 
     if ((a != NULL) && (!sp_iszero(a))) {
         int i;
@@ -2761,15 +2761,15 @@ int sp_cnt_lsb(sp_int* a)
         }
 
         for (j = 0; j < SP_WORD_SIZE; j += SP_LNZ_BITS) {
-            bc = sp_lnz[(a->dp[i] >> j) & SP_LNZ_MASK];
-            if (bc != 4) {
-                bc += cnt + j;
+            bc_server = sp_lnz[(a->dp[i] >> j) & SP_LNZ_MASK];
+            if (bc_server != 4) {
+                bc_server += cnt + j;
                 break;
             }
         }
     }
 
-    return bc;
+    return bc_server;
 }
 #endif /* WOLFSSL_SP_MATH_ALL || WOLFSSL_HAVE_SP_DH || (HAVE_ECC && FP_ECC) */
 

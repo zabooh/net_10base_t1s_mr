@@ -54,17 +54,17 @@ extern "C" {
 #define RECEIVE_BUFFER_SIZE     1024
 #define TRANSMIT_BUFFER_SIZE    1024
 #define SERVER_TIME_SLOT        100
-    
+
     // *****************************************************************************
 
-/* Application states
+        /* Application states
 
-      Summary:
-        Application states enumeration
+          Summary:
+            Application states enumeration
 
-      Description:
-        This enumeration defines the valid application states.  These states
-        determine the behavior of the application at various times.
+          Description:
+            This enumeration defines the valid application states.  These states
+            determine the behavior of the application at various times.
      */
 
     typedef enum {
@@ -101,20 +101,26 @@ extern "C" {
     typedef struct {
         /* The application's current state */
         APP_STATES state;
-        
+
         SYS_TIME_HANDLE timer_client_hdl;
         UDP_SOCKET udp_client_socket;
         SYS_TIME_HANDLE timer_server_hdl;
-        UDP_SOCKET udp_server_socket;        
+        UDP_SOCKET udp_server_socket;
         TCPIP_NET_HANDLE netH;
         IPV4_ADDR ipAddr;
         char receive_buffer[RECEIVE_BUFFER_SIZE];
         char transmit_buffer[TRANSMIT_BUFFER_SIZE];
-        
+
         /* TODO: Define any additional data used by the application. */
         uint32_t temp_rnd_identity;
     } APP_DATA;
 
+    typedef struct {
+        uint32_t temp_rnd_identity;
+        uint32_t max_nodes;
+        uint32_t node[DRV_ETHPHY_PLCA_NODE_COUNT];
+    } BROADCAST_DATA;
+    
     // *****************************************************************************
     // *****************************************************************************
     // Section: Application Callback Routines
