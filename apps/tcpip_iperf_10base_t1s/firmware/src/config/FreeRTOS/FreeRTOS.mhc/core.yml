@@ -310,6 +310,13 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '0x77ff'}
+  - type: String
+    attributes: {id: MCLK_APBC_INITIAL_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0x2400'}
   - type: Boolean
     attributes: {id: NVIC_-1_0_ENABLE}
     children:
@@ -2412,6 +2419,13 @@ children:
       children:
       - type: Dynamic
         attributes: {id: tc0, value: 'true'}
+  - type: Boolean
+    attributes: {id: TRNG_CLOCK_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: trng, value: 'true'}
   - type: Setting
     attributes: {id: XC32_HEAP}
     children:

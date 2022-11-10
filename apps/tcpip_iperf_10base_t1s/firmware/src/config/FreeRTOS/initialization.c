@@ -456,6 +456,8 @@ void SYS_Initialize ( void* data )
 
     TC0_TimerInitialize();
 
+	TRNG_Initialize();
+
     SERCOM1_USART_Initialize();
 
     EVSYS_Initialize();

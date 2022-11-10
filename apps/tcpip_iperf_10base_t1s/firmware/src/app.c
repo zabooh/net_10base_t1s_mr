@@ -108,6 +108,7 @@ void MyTxQueueErase(void){
 void APP_Initialize(void)
 {
 	/* Place the App state machine in its initial state. */
+    appData.temp_rnd_identity = TRNG_ReadData();
 	appData.state = APP_DISPLAY_INIT;    
     LED1_Set();
     LED2_Set();
@@ -177,6 +178,7 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
         {
             gfx_mono_ssd1306_init();
             appData.state = APP_WAIT_STACK_INIT;
+            SYS_CONSOLE_PRINT("Temporary Random Identity: %08x\n\r",appData.temp_rnd_identity);
             break;
         }
         
@@ -313,7 +315,7 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
                     SYS_CONSOLE_PRINT("%s\r\n", str);
                     gfx_mono_print_scroll("new:%s",str);
                 }
-                    appData.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &APP_UDP_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
+                    appData.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(SERVER_TIME_SLOT), &APP_UDP_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
                     SYS_TIME_TimerStart(appData.timer_client_hdl);
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
@@ -452,22 +454,30 @@ typedef enum {
 
 void APP_UDP_TimerCallback(uintptr_t context) {
     static UDP_CLIENT_STATES udp_client_state = UDP_CLIENT_START_CLIENT;
+    static int timeout = 0;
 
+    if (timeout != 0) {
+        timeout--;
+        if (timeout == 0) {
+            udp_client_state = UDP_CLIENT_TIMEOUT;
+        }
+    }
+    
     switch (udp_client_state) {
         case UDP_CLIENT_START_CLIENT:
             SYS_CONSOLE_PRINT("Start Client\n\r");
             appData.ipAddr.Val = 0xFFFFFFFF;
             appData.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & appData.ipAddr);
+            timeout = 10;
             udp_client_state = UDP_CLIENT_WAIT_FOR_SERVER;
             break;
         case UDP_CLIENT_WAIT_FOR_SERVER:
             if (!TCPIP_UDP_IsConnected(appData.udp_client_socket)) {
                 break;
-            }
+            }            
             if (TCPIP_UDP_PutIsReady(appData.udp_client_socket) == 0) {
                 break;
             }
-            SYS_CONSOLE_PRINT("Client connected\n\r");
             sprintf(appData.transmit_buffer, "Hallo Server");
             TCPIP_UDP_ArrayPut(appData.udp_client_socket, (uint8_t*) appData.transmit_buffer, strlen(appData.transmit_buffer));
             TCPIP_UDP_Flush(appData.udp_client_socket);
@@ -480,14 +490,14 @@ void APP_UDP_TimerCallback(uintptr_t context) {
                 TCPIP_UDP_ArrayGet(appData.udp_server_socket, (uint8_t*) appData.receive_buffer, (uint16_t) RECEIVE_BUFFER_SIZE);
                 SYS_CONSOLE_PRINT("Received from Server: %s\n\r", appData.receive_buffer);
                 TCPIP_UDP_Flush(appData.udp_server_socket);
-                TCPIP_UDP_Discard(appData.udp_server_socket);
-                TCPIP_UDP_Close(appData.udp_server_socket);
+                TCPIP_UDP_Discard(appData.udp_server_socket);                
                 udp_client_state = UDP_CLIENT_TIMEOUT;
             }
 
             break;
 
         case UDP_CLIENT_TIMEOUT:
+            TCPIP_UDP_Close(appData.udp_server_socket);
             TCPIP_UDP_Close(appData.udp_client_socket);
             udp_client_state = UDP_CLIENT_START_CLIENT;
             break;

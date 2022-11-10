@@ -214,6 +214,9 @@
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc0.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f9" displayName="trng" projectFiles="true">
+              <itemPath>../src/config/FreeRTOS/peripheral/trng/plib_trng.h</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
             <logicalFolder name="f3" displayName="cache" projectFiles="true">
@@ -661,6 +664,9 @@
             <logicalFolder name="f2" displayName="tc" projectFiles="true">
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f9" displayName="trng" projectFiles="true">
+              <itemPath>../src/config/FreeRTOS/peripheral/trng/plib_trng.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f6" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/FreeRTOS/stdio/xc32_monitor.c</itemPath>
@@ -901,6 +907,7 @@
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_debug.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_time.yml</itemPath>
         <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/tc0.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/trng.yml</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="wolfcrypt" projectFiles="true">
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/misc.c</itemPath>
@@ -928,8 +935,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.5.87"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1127,7 +1134,7 @@
         <property key="arm.vtor_adr" value="exception_table"/>
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
-        <property key="communication.speed" value="2.000"/>
+        <property key="communication.speed" value="5.0"/>
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
@@ -1714,7 +1721,7 @@
         <property key="codecoverage.outputfile" value=""/>
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
-        <property key="communication.speed" value="2.000"/>
+        <property key="communication.speed" value="5.0"/>
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
