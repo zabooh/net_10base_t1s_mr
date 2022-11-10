@@ -32,6 +32,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+#include "config/default/system/time/sys_time.h"
+#include "config/default/library/tcpip/tcpip.h"
+#include "config/default/library/tcpip/udp.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -46,7 +49,11 @@ extern "C" {
     // Section: Type Definitions
     // *****************************************************************************
     // *****************************************************************************
+#define UDP_SERVER_PORT         47134
+#define RECEIVE_BUFFER_SIZE     1024
+#define TRANSMIT_BUFFER_SIZE    1024
 
+    
     // *****************************************************************************
 
 /* Application states
@@ -93,6 +100,14 @@ extern "C" {
         /* The application's current state */
         APP_STATES state;
 
+        SYS_TIME_HANDLE timer_client_hdl;
+        UDP_SOCKET udp_client_socket;
+        SYS_TIME_HANDLE timer_server_hdl;
+        UDP_SOCKET udp_server_socket;  
+        TCPIP_NET_HANDLE netH;
+        IPV4_ADDR ipAddr;
+        char receive_buffer[RECEIVE_BUFFER_SIZE];
+        char transmit_buffer[TRANSMIT_BUFFER_SIZE];        
         /* TODO: Define any additional data used by the application. */
 
     } APP_DATA;

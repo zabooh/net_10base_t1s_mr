@@ -71,7 +71,8 @@ static DRV_MIIM_RESULT Write_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAd
 static DRV_MIIM_RESULT Write_Bit_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
 #endif
 static DRV_MIIM_RESULT Read_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
-void MONITOR_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param);
+void APP_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param);
+void APP_UDP_TimerCallback(uintptr_t context);
 
 /******************************************************************************
  *  Function Definitions
@@ -184,7 +185,7 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
         {
             if (TCPIP_STACK_Status(sysObj.tcpip) == SYS_STATUS_READY)
             {
-                TCPIP_DHCP_HandlerRegister(TCPIP_STACK_IndexToNet(0), MONITOR_DHCP_eth_Handler, &dhcp_eth_hParam);
+                TCPIP_DHCP_HandlerRegister(TCPIP_STACK_IndexToNet(0), APP_DHCP_eth_Handler, &dhcp_eth_hParam);
                 appData.state = APP_MIIM_INIT;
             }
             break;
@@ -312,6 +313,8 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
                     SYS_CONSOLE_PRINT("%s\r\n", str);
                     gfx_mono_print_scroll("new:%s",str);
                 }
+                    appData.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &APP_UDP_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
+                    SYS_TIME_TimerStart(appData.timer_client_hdl);
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
@@ -403,7 +406,7 @@ static DRV_MIIM_RESULT Read_Phy_Register (LAN867X_REG_OBJ *clientObj, int phyAdd
 	return Lan867x_Read_Register(clientObj, regAddr, rData);
 }
 
-void MONITOR_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param) {
+void APP_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evType, const void* param) {
 
     SYS_CONSOLE_PRINT("%s - ", TCPIP_STACK_NetNameGet(hNet));
 
@@ -439,4 +442,58 @@ void MONITOR_DHCP_eth_Handler(TCPIP_NET_HANDLE hNet, TCPIP_DHCP_EVENT_TYPE evTyp
 
     }
 }
+
+typedef enum {
+    UDP_CLIENT_START_CLIENT,
+    UDP_CLIENT_WAIT_FOR_SERVER,
+    UDP_CLIENT_WAIT_FOR_SERVER_AS_CLIENT,
+    UDP_CLIENT_TIMEOUT
+} UDP_CLIENT_STATES;
+
+void APP_UDP_TimerCallback(uintptr_t context) {
+    static UDP_CLIENT_STATES udp_client_state = UDP_CLIENT_START_CLIENT;
+
+    switch (udp_client_state) {
+        case UDP_CLIENT_START_CLIENT:
+            SYS_CONSOLE_PRINT("Start Client\n\r");
+            appData.ipAddr.Val = 0xFFFFFFFF;
+            appData.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & appData.ipAddr);
+            udp_client_state = UDP_CLIENT_WAIT_FOR_SERVER;
+            break;
+        case UDP_CLIENT_WAIT_FOR_SERVER:
+            if (!TCPIP_UDP_IsConnected(appData.udp_client_socket)) {
+                break;
+            }
+            if (TCPIP_UDP_PutIsReady(appData.udp_client_socket) == 0) {
+                break;
+            }
+            SYS_CONSOLE_PRINT("Client connected\n\r");
+            sprintf(appData.transmit_buffer, "Hallo Server");
+            TCPIP_UDP_ArrayPut(appData.udp_client_socket, (uint8_t*) appData.transmit_buffer, strlen(appData.transmit_buffer));
+            TCPIP_UDP_Flush(appData.udp_client_socket);
+            appData.udp_server_socket = TCPIP_UDP_ServerOpen(IP_ADDRESS_TYPE_IPV4, UDP_SERVER_PORT, 0);
+            udp_client_state = UDP_CLIENT_WAIT_FOR_SERVER_AS_CLIENT;
+            break;
+
+        case UDP_CLIENT_WAIT_FOR_SERVER_AS_CLIENT:
+            if (TCPIP_UDP_GetIsReady(appData.udp_server_socket)) {
+                TCPIP_UDP_ArrayGet(appData.udp_server_socket, (uint8_t*) appData.receive_buffer, (uint16_t) RECEIVE_BUFFER_SIZE);
+                SYS_CONSOLE_PRINT("Received from Server: %s\n\r", appData.receive_buffer);
+                TCPIP_UDP_Flush(appData.udp_server_socket);
+                TCPIP_UDP_Discard(appData.udp_server_socket);
+                TCPIP_UDP_Close(appData.udp_server_socket);
+                udp_client_state = UDP_CLIENT_TIMEOUT;
+            }
+
+            break;
+
+        case UDP_CLIENT_TIMEOUT:
+            TCPIP_UDP_Close(appData.udp_client_socket);
+            udp_client_state = UDP_CLIENT_START_CLIENT;
+            break;
+
+    }
+
+}
+
 /*********************************** End of File *******************************/
