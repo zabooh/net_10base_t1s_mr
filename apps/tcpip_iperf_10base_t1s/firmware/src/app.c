@@ -108,8 +108,10 @@ void MyTxQueueErase(void){
 void APP_Initialize(void)
 {
 	/* Place the App state machine in its initial state. */
-    appData.temp_rnd_identity = TRNG_ReadData();
+    appData.temp_rnd_identity.val = TRNG_ReadData();    
+    appData.PLCA_NodeId = DRV_ETHPHY_PLCA_NODE_COUNT - 1;
 	appData.state = APP_DISPLAY_INIT;    
+    appData.node_flag = false;                        
     LED1_Set();
     LED2_Set();
     LED3_Set();
@@ -139,7 +141,6 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
         {-1}
     };
     IPV4_ADDR ipAddr;
-    TCPIP_NET_HANDLE netH;
     
     {
         static int old_but1 = 0;        
@@ -297,18 +298,18 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
             nNets = TCPIP_STACK_NumberOfNetworksGet();
 
             for (i = 0; i < nNets; i++) {
-                netH = TCPIP_STACK_IndexToNet(i);
-                if (!TCPIP_STACK_NetIsReady(netH)) {
+                appData.netH = TCPIP_STACK_IndexToNet(i);
+                if (!TCPIP_STACK_NetIsReady(appData.netH)) {
                     continue; // interface not ready yet! , 
                     //looking for another interface, that can be used for communication.
                 }
                 // Now. there is a ready interface that we can use
-                ipAddr.Val = TCPIP_STACK_NetAddress(netH);
+                ipAddr.Val = TCPIP_STACK_NetAddress(appData.netH);
                 // display the changed IP address
                 if (dwLastIP[i].Val != ipAddr.Val) {
                     dwLastIP[i].Val = ipAddr.Val;
 
-                    SYS_CONSOLE_PRINT(TCPIP_STACK_NetNameGet(netH));
+                    SYS_CONSOLE_PRINT(TCPIP_STACK_NetNameGet(appData.netH));
                     SYS_CONSOLE_PRINT(" IP Address: ");
                     char str[100];
                     sprintf(str,"%d.%d.%d.%d", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
@@ -323,6 +324,12 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
             
         case APP_STATE_SERVICE_TASKS:
         {
+            if (appData.node_flag == true) {
+                appData.node_flag = false;
+                gfx_mono_print_scroll("new ip:192.168.1.%d\n", appData.ipAddr.v[3]);
+                gfx_mono_print_scroll("new bode id:%d\n", appData.PLCA_NodeId);
+            }
+                    
             /* Any operation to be done. */
             break;
         }
@@ -450,15 +457,17 @@ typedef enum {
     UDP_CLIENT_START_CLIENT,
     UDP_CLIENT_WAIT_FOR_SERVER,
     UDP_CLIENT_WAIT_FOR_SERVER_AS_CLIENT,
-    UDP_CLIENT_TIMEOUT
+    UDP_CLIENT_TIMEOUT,
+    UDP_CLIENT_IDLE
 } UDP_CLIENT_STATES;
 
 BROADCAST_DATA bc_client;
 BROADCAST_DATA *ptr_bc_server;
 
-void APP_UDP_TimerCallback(uintptr_t context) {
+void __attribute__((optimize("-O0"))) APP_UDP_TimerCallback(uintptr_t context) {
     static UDP_CLIENT_STATES udp_client_state = UDP_CLIENT_INIT;
     static int timeout = 0;
+    int ix;
 
     if (timeout != 0) {
         timeout--;
@@ -470,7 +479,7 @@ void APP_UDP_TimerCallback(uintptr_t context) {
     switch (udp_client_state) {
         
         case UDP_CLIENT_INIT:
-            bc_client.temp_rnd_identity = appData.temp_rnd_identity;
+            bc_client.temp_rnd_identity = appData.temp_rnd_identity.val;
             udp_client_state = UDP_CLIENT_START_CLIENT;
         break;
         
@@ -488,7 +497,6 @@ void APP_UDP_TimerCallback(uintptr_t context) {
             if (TCPIP_UDP_PutIsReady(appData.udp_client_socket) == 0) {
                 break;
             }
-            //sprintf(appData.transmit_buffer, "Hallo Server");
             TCPIP_UDP_ArrayPut(appData.udp_client_socket, (uint8_t*) &bc_client, sizeof(BROADCAST_DATA));
             TCPIP_UDP_Flush(appData.udp_client_socket);
             appData.udp_server_socket = TCPIP_UDP_ServerOpen(IP_ADDRESS_TYPE_IPV4, UDP_SERVER_PORT, 0);
@@ -498,8 +506,32 @@ void APP_UDP_TimerCallback(uintptr_t context) {
         case UDP_CLIENT_WAIT_FOR_SERVER_AS_CLIENT:
             if (TCPIP_UDP_GetIsReady(appData.udp_server_socket)) {
                 TCPIP_UDP_ArrayGet(appData.udp_server_socket, (uint8_t*) appData.receive_buffer, (uint16_t) RECEIVE_BUFFER_SIZE);
-                ptr_bc_server = appData.receive_buffer;
+                ptr_bc_server = (BROADCAST_DATA*) appData.receive_buffer;
                 SYS_CONSOLE_PRINT("Received from Server: %08x\n\r", ptr_bc_server->temp_rnd_identity);
+                for (ix = 0; ix < DRV_ETHPHY_PLCA_NODE_COUNT; ix++) {
+                    if (ptr_bc_server->node[ix] == appData.temp_rnd_identity.val) {
+                        IPV4_ADDR ipMask;
+                        uint8_t *pMac;
+                        appData.PLCA_NodeId = ix + 1;
+                        ipMask.Val = 0x00FFFFFF;
+                        char str[100];
+
+                        appData.ipAddr.Val = TCPIP_STACK_NetAddress(appData.netH);
+                        appData.ipAddr.v[3] = (uint8_t) appData.PLCA_NodeId + 100;
+
+                        sprintf(str, "setip eth0 192.168.1.%d\n", appData.ipAddr.v[3]);
+                        SERCOM1_USART_Virtual_Send(str);
+                        appData.node_flag = true;   
+                        //gfx_mono_print_scroll("new ip:192.168.1.%d\n",ipAddr.v[3]);
+                        //gfx_mono_print_scroll("new bode id:%d\n",appData.PLCA_NodeId);
+
+                        uint16_t registerValue = F2R_(appData.PLCA_NodeId, PHY_PLCA_CTRL1_ID0) | F2R_(DRV_ETHPHY_PLCA_NODE_COUNT, PHY_PLCA_CTRL1_NCNT);
+                        Lan867x_Write_Register(&clientObj, PHY_PLCA_CONTROL_1, registerValue);
+                        SYS_CONSOLE_PRINT("Set IP/Mask/MAC/NodeId to %d\n\r", appData.PLCA_NodeId);                      
+                        
+                        break;
+                    }
+                }                
                 TCPIP_UDP_Flush(appData.udp_server_socket);
                 TCPIP_UDP_Discard(appData.udp_server_socket);                
                 udp_client_state = UDP_CLIENT_TIMEOUT;
@@ -510,7 +542,10 @@ void APP_UDP_TimerCallback(uintptr_t context) {
         case UDP_CLIENT_TIMEOUT:
             TCPIP_UDP_Close(appData.udp_server_socket);
             TCPIP_UDP_Close(appData.udp_client_socket);
-            udp_client_state = UDP_CLIENT_START_CLIENT;
+            udp_client_state = UDP_CLIENT_IDLE;
+            break;
+            
+        case UDP_CLIENT_IDLE:
             break;
 
     }

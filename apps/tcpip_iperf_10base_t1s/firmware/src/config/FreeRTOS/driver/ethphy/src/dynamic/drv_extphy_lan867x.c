@@ -32,6 +32,9 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
 #include "driver/ethphy/src/dynamic/drv_extphy_lan867x.h"
 #include "driver/ethphy/src/drv_ethphy_local.h"
+#include "../app.h"
+
+extern APP_DATA appData;
 
 /******************************************************************************
  *  PRIVATE FUNCTION DECLARATIONS
@@ -153,7 +156,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
 
     case 13: /* Set the PLCA node setting.*/
 #ifdef DRV_ETHPHY_PLCA_ENABLED
-        registerValue = F2R_(DRV_ETHPHY_PLCA_LOCAL_NODE_ID, PHY_PLCA_CTRL1_ID0) |
+        registerValue = F2R_(appData.PLCA_NodeId, PHY_PLCA_CTRL1_ID0) |
                         F2R_(DRV_ETHPHY_PLCA_NODE_COUNT, PHY_PLCA_CTRL1_NCNT);
         miimRes = Lan867x_Write_Register(&clientObj, PHY_PLCA_CONTROL_1, registerValue);
 #endif

@@ -230,7 +230,7 @@ TCPIP_STACK_HEAP_INTERNAL_CONFIG tcpipHeapConfig =
 };
 
 
-const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] =
+ TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] =
 {
     /*** Network Configuration Index 0 ***/
     {
@@ -296,6 +296,10 @@ SYS_MODULE_OBJ TCPIP_STACK_Init(void)
 {
     TCPIP_STACK_INIT    tcpipInit;
 
+    char mstr[100];
+    sprintf(mstr,"00:04:25:%02x:%02x:%02x",(uint8_t)TRNG_ReadData(),(uint8_t)TRNG_ReadData(),(uint8_t)TRNG_ReadData());
+    TCPIP_HOSTS_CONFIGURATION[0].macAddr = mstr;
+    
     tcpipInit.pNetConf = TCPIP_HOSTS_CONFIGURATION;
     tcpipInit.nNets = TCPIP_HOSTS_CONFIGURATION_SIZE;
     tcpipInit.pModConfig = TCPIP_STACK_MODULE_CONFIG_TBL;
@@ -483,8 +487,8 @@ void SYS_Initialize ( void* data )
 /* TCPIP Stack Initialization */
 sysObj.tcpip = TCPIP_STACK_Init();
 SYS_ASSERT(sysObj.tcpip != SYS_MODULE_OBJ_INVALID, "TCPIP_STACK_Init Failed" );
-
-
+    
+    
     CRYPT_WCCB_Initialize();
 
     APP_Initialize();

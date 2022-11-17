@@ -78,6 +78,7 @@
 #include "task.h"
 #include "app.h"
 #include "gfx_mono/gfx_definitions.h"
+#include "driver/ethphy/src/drv_ethphy_local.h"
 
 
 // DOM-IGNORE-BEGIN

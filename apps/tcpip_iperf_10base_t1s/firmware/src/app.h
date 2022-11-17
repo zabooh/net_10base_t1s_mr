@@ -96,6 +96,13 @@ extern "C" {
         Application strings and buffers are be defined outside this structure.
      */
 
+    typedef union
+    {
+        uint32_t val;
+        uint16_t w[2];
+        uint8_t  v[4];
+    } RANDOM_VALUE;    
+
     typedef struct {
         /* The application's current state */
         APP_STATES state;
@@ -109,7 +116,9 @@ extern "C" {
         char receive_buffer[RECEIVE_BUFFER_SIZE];
         char transmit_buffer[TRANSMIT_BUFFER_SIZE];        
         /* TODO: Define any additional data used by the application. */
-        uint32_t temp_rnd_identity;
+        RANDOM_VALUE temp_rnd_identity;
+        uint32_t PLCA_NodeId;
+        bool node_flag;        
     } APP_DATA;
 
     typedef struct {
