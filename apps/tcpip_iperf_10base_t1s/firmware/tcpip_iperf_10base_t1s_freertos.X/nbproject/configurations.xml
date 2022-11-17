@@ -937,8 +937,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.5.87"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1136,7 +1136,7 @@
         <property key="arm.vtor_adr" value="exception_table"/>
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
-        <property key="communication.speed" value="2.000"/>
+        <property key="communication.speed" value="5.0"/>
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
@@ -1723,7 +1723,7 @@
         <property key="codecoverage.outputfile" value=""/>
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
-        <property key="communication.speed" value="2.000"/>
+        <property key="communication.speed" value="5.0"/>
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>

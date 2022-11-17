@@ -470,13 +470,14 @@ typedef enum {
     UDP_SERVER_START_SERVER,
     UDP_SERVER_WAIT_FOR_CLIENT,
     UDP_SERVER_WAIT_FOR_SERVER_CLIENT,
-    UDP_SERVER_TIMEOUT
+    UDP_SERVER_TIMEOUT,
+    UDP_SERVER_IDLE        
 } UDP_CLIENT_STATES;
 
 BROADCAST_DATA bc_server;
 BROADCAST_DATA *ptr_bc_client;
 
-void APP_UDP_TimerCallback(uintptr_t context) {
+void __attribute__((optimize("-O0"))) APP_UDP_TimerCallback(uintptr_t context) {
     static UDP_CLIENT_STATES udp_client_state = UDP_SERVER_INIT;
     static int timeout = 0;
     int ix;
@@ -511,8 +512,14 @@ void APP_UDP_TimerCallback(uintptr_t context) {
                 break; 
             }
             TCPIP_UDP_ArrayGet(appData.udp_server_socket, (uint8_t*) appData.receive_buffer, (uint16_t) RECEIVE_BUFFER_SIZE);
-            ptr_bc_client = appData.receive_buffer;
+            ptr_bc_client = (BROADCAST_DATA*) appData.receive_buffer;
             SYS_CONSOLE_PRINT("Received from Client: %08x\n\r", ptr_bc_client->temp_rnd_identity);
+            for (ix = 0; ix < DRV_ETHPHY_PLCA_NODE_COUNT; ix++) {
+                if (bc_server.node[ix] == 0) {
+                    bc_server.node[ix] = ptr_bc_client->temp_rnd_identity;
+                    break;
+                }
+            }
             appData.ipAddr.Val = 0xFFFFFFFF;
             appData.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & appData.ipAddr);
             udp_client_state = UDP_SERVER_WAIT_FOR_SERVER_CLIENT;
@@ -524,8 +531,7 @@ void APP_UDP_TimerCallback(uintptr_t context) {
             }
             if (TCPIP_UDP_PutIsReady(appData.udp_client_socket) == 0) {
                 break;
-            }            
-            //sprintf(appData.transmit_buffer, "Hallo Client");
+            }
             TCPIP_UDP_ArrayPut(appData.udp_client_socket, (uint8_t*) &bc_server, sizeof(BROADCAST_DATA));
             TCPIP_UDP_Flush(appData.udp_client_socket);
             TCPIP_UDP_Discard(appData.udp_client_socket);            
@@ -538,6 +544,8 @@ void APP_UDP_TimerCallback(uintptr_t context) {
             udp_client_state = UDP_SERVER_START_SERVER;
             break;
 
+        case UDP_SERVER_IDLE:
+            break;
     }
 
 }
