@@ -343,6 +343,99 @@ void __attribute__((optimize("-O0"))) APP_Tasks(void)
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
+            
+        case APP_STATE_FIND_MASTER:
+        {
+            /*
+			Bus_detection_init();
+			Decide_master_with_mac();
+			Bus_detection_stop();
+            break;
+            */
+        }
+		
+		case APP_STATE_DETECT_MASTER:
+        {
+             /*
+			if(TRUE == Wait_for_beacon()) //Waits n time
+			{	
+				if(TRUE = Multiple_new_devices())
+				{
+					appData.state = APP_STATE_REGISTER_N_NEW_DEVICES;
+				}
+				else 
+				{
+					appData.state = APP_STATE_REGISTER_NEW;
+				}
+			}
+			else
+			{
+				appData.state = APP_STATE_FIND_MASTER;
+			}
+            */
+            break;
+        }
+		
+		case APP_STATE_MASTER_LOST:
+        {
+            /*
+			appData.state = APP_STATE_FIND_MASTER
+            break;
+            */
+        }
+		
+		case APP_STATE_DEVICE_LOST:	//better name Check Device alive?
+        {	
+            /*
+			if(TRUE == Check_alive_msg())
+			{
+				//done
+			}
+			else
+			{
+				Remove_device();
+				Free_nodeid();
+			}
+            */
+            break;
+        }
+		
+		case APP_STATE_REGISTER_N_NEW_DEVICES:
+        {
+            /*
+			Wait_for_registration_timeslot();	//TODO failstate
+			Bus_detection_init();
+			if(NETWORK_FULL != Permission_register_check())
+			{
+				Getnodeid();
+				//todo etc.
+			}
+			else
+			{
+				 //todo 
+				 //own state for network full?
+			}
+			*/
+            break;
+        }
+		
+		case APP_STATE_REGISTER_NEW_DEVICE:
+        {
+            /*
+			Wait_for_registration_timeslot();	//TODO failstate
+			if(NETWORK_FULL != Permission_register_check())
+			{
+				Getnodeid();
+				//todo etc.
+			}
+			else
+			{
+				 //todo 
+				 //own state for network full?
+			}
+            */
+            break;
+        }
 
         case APP_STATE_SERVICE_TASKS:
             break;
