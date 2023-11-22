@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/FreeRTOS/production/tcpip_iperf_10base_t1s_freertos.X.production.elf">
+    <memory name="program">
+      <units>bytes</units>
+      <length>1048576</length>
+      <used>139648</used>
+      <free>908928</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>262144</length>
+      <used>59181</used>
+      <free>202963</free>
+    </memory>
+  </executable>
+</project>
